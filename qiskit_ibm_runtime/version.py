@@ -20,6 +20,7 @@ Example::
 import os
 import subprocess
 from typing import List
+from security import safe_command
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -35,8 +36,7 @@ def _minimal_ext_cmd(cmd: List[str]) -> bytes:
     env["LANGUAGE"] = "C"
     env["LANG"] = "C"
     env["LC_ALL"] = "C"
-    proc = subprocess.Popen(
-        cmd,
+    proc = safe_command.run(subprocess.Popen, cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         env=env,
